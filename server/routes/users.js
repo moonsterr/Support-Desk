@@ -6,15 +6,15 @@ import User from '../models/User.js';
 
 router.post('/create', async (req, res) => {
   try {
-    const alreadyUser = User.findone({ email: req.body.email });
+    const alreadyUser = await User.findOne({ email: req.body.email });
     if (alreadyUser) {
-      return res.status(409).send({ success: false, data: 'already exists' });
+      return res.status(409).send({ success: false, data: `${alreadyUser}` });
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user = new User({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
     });
     await user.save();
     return res
@@ -22,7 +22,7 @@ router.post('/create', async (req, res) => {
       .send({ success: true, data: 'User created succsfuly' });
   } catch (error) {
     console.error('🔴 Error creating user:', error);
-    return res.status(400).send({ success: false, data: error });
+    return res.status(400).send({ success: false, data: `${error}` });
   }
 });
 
