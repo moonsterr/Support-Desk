@@ -41,7 +41,6 @@ export default function Login() {
       console.log(data.data);
       setStorage(data.data); // store the token or relevant data
       navigate('../'); // redirect after login success
-      window.location.reload();
     } catch (err) {
       console.log(err);
       setError('unknown');

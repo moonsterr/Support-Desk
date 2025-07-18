@@ -57,7 +57,6 @@ export default function Register() {
       }
       setStorage(data2.data);
       navigate('../');
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }

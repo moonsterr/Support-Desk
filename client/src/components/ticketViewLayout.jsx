@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocaleStorage';
 
 export default function TicketViewLayout() {
   const [storage] = useLocalStorage('jwt');
   const [tickets, setTickets] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     async function getTickets() {
       const res = await fetch('http://localhost:3000/api/tickets/get', {
@@ -19,6 +20,9 @@ export default function TicketViewLayout() {
     }
     getTickets();
   }, []);
+  if (!storage) {
+    navigate('../login');
+  }
   return (
     <main className="view-main">
       <Link className="back-btn" to="/">

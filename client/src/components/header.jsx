@@ -6,7 +6,7 @@ export default function Header({ storage, setStorage }) {
   const navigate = useNavigate();
   return (
     <header>
-      <p>Support Desk</p>
+      <p onClick={() => navigate('/')}>Support Desk</p>
       {!storage && (
         <div className="header-btns">
           <button className="btn" onClick={() => navigate('login')}>

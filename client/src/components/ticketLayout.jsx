@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocaleStorage';
 
 export default function TicketLayout() {
   const [storage] = useLocalStorage('jwt');
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const server = 'http://localhost:3000/api/users';
   useEffect(() => {
     async function getUser() {
@@ -19,6 +20,9 @@ export default function TicketLayout() {
     }
     getUser();
   }, []);
+  if (!storage) {
+    navigate('../login');
+  }
   return (
     <main className="create-ticket-main">
       <div className="ticket-container">
