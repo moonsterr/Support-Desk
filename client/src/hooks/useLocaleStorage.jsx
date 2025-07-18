@@ -1,27 +1,36 @@
 import { useState, useEffect } from 'react';
 
-function useLocalStorage(key, initialValue) {
-  // Lazy init with value from localStorage or fallback to initialValue
+function useLocalStorage(key, initialValue = '') {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item !== null ? JSON.parse(item) : initialValue;
+      return item ? item : initialValue;
     } catch (error) {
-      console.warn('useLocalStorage error reading key:', key, error);
+      console.log(error);
       return initialValue;
     }
   });
 
-  // Update localStorage when value changes
-  useEffect(() => {
+  const setValue = (value) => {
     try {
-      window.localStorage.setItem(key, JSON.stringify(storedValue));
+      setStoredValue(value);
+      window.localStorage.setItem(key, value);
     } catch (error) {
-      console.warn('useLocalStorage error setting key:', key, error);
+      console.log(error);
     }
-  }, [key, storedValue]);
+  };
 
-  return [storedValue, setStoredValue];
+  useEffect(() => {
+    function syncStorage(event) {
+      if (event.key === key) {
+        setStoredValue(event.newValue || '');
+      }
+    }
+    window.addEventListener('storage', syncStorage);
+    return () => window.removeEventListener('storage', syncStorage);
+  }, [key]);
+
+  return [storedValue, setValue];
 }
 
 export default useLocalStorage;

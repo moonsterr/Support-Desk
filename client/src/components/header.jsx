@@ -1,11 +1,8 @@
-import useLocalStorage from '../hooks/useLocaleStorage';
 import { BiLogOut } from 'react-icons/bi';
 import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-export default function Welcome() {
-  const [storage, setStorage] = useLocalStorage('jwt', '');
-  console.log(storage);
+export default function Header({ storage, setStorage }) {
   const navigate = useNavigate();
   return (
     <header>
@@ -15,7 +12,7 @@ export default function Welcome() {
           <button className="btn" onClick={() => navigate('login')}>
             <BiLogOut className="icon" /> Login
           </button>
-          <button className="btn" onClick={() => navigate('create')}>
+          <button className="btn" onClick={() => navigate('register')}>
             <FaUser className="icon" /> Register
           </button>
         </div>

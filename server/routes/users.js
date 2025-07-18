@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import authenticateToken from '../middleware/middleware.js';
 import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
 
 router.post('/create', async (req, res) => {
   try {
@@ -43,6 +44,18 @@ router.post('/login', async (req, res) => {
     return res.status(200).send({ success: true, data: token });
   } catch (error) {
     return res.status(500).send({ success: false, data: 'server' });
+  }
+});
+
+router.get('/get', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const user = await User.findById(userId).select('username email'); // only username and email
+    if (!user)
+      return res.status(404).send({ success: false, data: 'not found' });
+    return res.status(200).send({ success: true, data: user });
+  } catch (error) {
+    return res.status(404).send({ success: false, data: 'server' });
   }
 });
 export default router;
