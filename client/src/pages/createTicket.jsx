@@ -20,19 +20,22 @@ export default function CreateTicket() {
     const product = formData.get('product');
     const description = formData.get('description');
     console.log(username, email, product, description);
-    const res = await fetch('http://localhost:3000/api/tickets/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${storage}`,
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        product,
-        description,
-      }),
-    });
+    const res = await fetch(
+      'https://support-desk-bupd.onrender.com/api/tickets/create',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${storage}`,
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          product,
+          description,
+        }),
+      }
+    );
     const data = await res.json();
     console.log('ticket created', data);
   }

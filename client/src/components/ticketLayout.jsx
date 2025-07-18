@@ -6,7 +6,7 @@ export default function TicketLayout() {
   const [storage] = useLocalStorage('jwt');
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const server = 'http://localhost:3000/api/users';
+  const server = 'https://support-desk-bupd.onrender.com/api/users';
   useEffect(() => {
     async function getUser() {
       const resUser = await fetch(`${server}/get`, {

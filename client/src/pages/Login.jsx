@@ -27,11 +27,14 @@ export default function Login() {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/users/login', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch(
+        'https://support-desk-bupd.onrender.com/api/users/login',
+        {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       const data = await res.json();
 
       if (!data.success) {

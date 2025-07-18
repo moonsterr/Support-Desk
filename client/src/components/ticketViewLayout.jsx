@@ -9,11 +9,14 @@ export default function TicketViewLayout() {
   const navigate = useNavigate();
   useEffect(() => {
     async function getTickets() {
-      const res = await fetch('http://localhost:3000/api/tickets/get', {
-        headers: {
-          authorization: `Bearer ${storage}`,
-        },
-      });
+      const res = await fetch(
+        'https://support-desk-bupd.onrender.com/api/tickets/get',
+        {
+          headers: {
+            authorization: `Bearer ${storage}`,
+          },
+        }
+      );
       const data = await res.json();
       console.log(data);
       setTickets(data.data);

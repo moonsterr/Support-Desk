@@ -22,33 +22,39 @@ export default function Register() {
       return;
     }
     try {
-      const res = await fetch('http://localhost:3000/api/users/create', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      });
+      const res = await fetch(
+        'https://support-desk-bupd.onrender.com/api/users/create',
+        {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+          }),
+        }
+      );
       const data = await res.json();
       if (!data.success) {
         setError('unkown');
         return;
       }
-      const res2 = await fetch('http://localhost:3000/api/users/login', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      });
+      const res2 = await fetch(
+        'https://support-desk-bupd.onrender.com/api/users/login',
+        {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+          }),
+        }
+      );
 
       const data2 = await res2.json();
       if (!data2.success) {

@@ -22,14 +22,17 @@ export default function Ticket() {
     const description = formData.get('note');
     const ticketId = ticket._id;
 
-    const res = await fetch('http://localhost:3000/api/tickets/addnote', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${storage}`,
-      },
-      body: JSON.stringify({ description, ticketId }),
-    });
+    const res = await fetch(
+      'https://support-desk-bupd.onrender.com/api/tickets/addnote',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${storage}`,
+        },
+        body: JSON.stringify({ description, ticketId }),
+      }
+    );
 
     const data = await res.json();
     if (data.success) {
@@ -41,12 +44,15 @@ export default function Ticket() {
   }
 
   async function handleClose() {
-    await fetch(`http://localhost:3000/api/tickets/delete/${ticket._id}`, {
-      method: 'DELETE',
-      headers: {
-        authorization: `Bearer ${storage}`,
-      },
-    });
+    await fetch(
+      `https://support-desk-bupd.onrender.com/api/tickets/delete/${ticket._id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${storage}`,
+        },
+      }
+    );
     navigate('../');
     window.location.reload();
   }
